@@ -5,13 +5,15 @@ class Post {
   int numUpVotes;
   int numDownVotes;
 
-  Post(this.title, this.numUpVotes, this.numDownVotes);
+  Post({required this.title, this.numUpVotes = 0, this.numDownVotes = 0});
 
   static List<Post> generateData() {
     return [
-      Post("Story 1", 10, 2),
-      Post("Story 2", 5, 3),
-      // Add more sample data
+      Post(title: "Post 1", numUpVotes: 10, numDownVotes: 10),
+      Post(title: "Post 2", numUpVotes: 15, numDownVotes: 5),
+      Post(title: "Post 3", numUpVotes: 5, numDownVotes: 15),
+      Post(title: "Post 4", numUpVotes: 20, numDownVotes: 0),
+      Post(title: "Post 5", numUpVotes: 0, numDownVotes: 20),
     ];
   }
 
