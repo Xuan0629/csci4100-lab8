@@ -15,6 +15,8 @@ class PostsDataTable extends StatefulWidget {
 class _PostsDataTableState extends State<PostsDataTable> {
   late List<Post> posts;
 
+  int? sortColumnIndex;
+  bool isAscending = true;
 
   @override
   void initState() {
@@ -36,10 +38,24 @@ class _PostsDataTableState extends State<PostsDataTable> {
   @override
   Widget build(BuildContext context) {
     return DataTable(
+      sortAscending: isAscending,
+      sortColumnIndex: sortColumnIndex,
       columns: [
-        DataColumn(label: Text('Title'), onSort: _onSort),
-        DataColumn(label: Text('Upvotes'), numeric: true),
-        DataColumn(label: Text('Downvotes'), numeric: true),
+        DataColumn(
+          label: Text('Title'),
+          onSort: _onSort,
+          numeric: false,
+        ),
+        DataColumn(
+          label: Text('Upvotes'),
+          onSort: _onSort,
+          numeric: true,
+        ),
+        DataColumn(
+          label: Text('Downvotes'),
+          onSort: _onSort,
+          numeric: true,
+        ),
       ],
       rows: posts.map((post) => DataRow(cells: [
         DataCell(Text(post.title)),
@@ -69,6 +85,9 @@ class _PostsDataTableState extends State<PostsDataTable> {
 
   void _onSort(int columnIndex, bool ascending) {
     setState(() {
+      sortColumnIndex = columnIndex;
+      isAscending = ascending;
+
       if (columnIndex == 0) { // Title column
         posts.sort((a, b) => ascending
             ? a.title.compareTo(b.title)
